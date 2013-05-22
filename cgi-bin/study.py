@@ -17,12 +17,18 @@ def main():
     ## 
     print "Content-type: text/html\n"
     userId = 0
+    page = 1
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
     cursor = connector.cursor()
 
 
     ## request parameters
     form = cgi.FieldStorage()
+    # page
+    if form.has_key("page"):
+        page = int(form["page"].value) + 1
+    
+    # like    
     if form.has_key("like"):
         ## insert result_like data
         for i in form.getlist("like"):
@@ -30,9 +36,9 @@ def main():
             cursor.execute(sql5)
             result5 = cursor.fetchall()
             genreId = result5[0][0]
-            sql4 = "insert into result_like (image_id, user_id, genre_id) values " + str(i) + " , " + str(userId) + " , " + str(genreId) + ")"
+            sql4 = "insert into result_like (image_id, user_id, genre_id) values (" + str(i) + " , " + str(userId) + " , " + str(genreId) + ")"
             print sql4
-#            cursor.execute(sql3)
+#            cursor.execute(sql4)
 
 
     ## create data
@@ -55,7 +61,7 @@ def main():
             list.append(image)
 
 
-    ## update history to shown
+    ## update history to be shown
     for image in list:
         sql3 = "update history set shown_flg = 1 where image_id = " + str(image.id) + " and user_id =  " + str(userId)
 #        cursor.execute(sql3)
@@ -63,10 +69,10 @@ def main():
 
 
     ## data for view
-    t = Template(filename=dirpath + "/templates/study.html")
+    t = Template(filename = dirpath + "/templates/study.html")
  
     ip = os.environ["REMOTE_ADDR"]
-    data = {'list': list, 'ip': ip}
+    data = {"list": list, "ip": ip, "page": page}
  
     html = t.render(**data)
     print html

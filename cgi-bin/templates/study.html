@@ -5,7 +5,11 @@
   </head>
   <body>
     <h1>Study</h1>
+    % if page == 10:
+    <form method="post" action="./calc.py">
+    % else:
     <form method="post" action="./study.py">
+    % endif
       % for d in list:
       <p>
 	<img src="http://${ip}:8000/cgi-bin/images/${d.name}" width="200" height="200"/>
@@ -13,6 +17,7 @@
       </p>								  
       % endfor
       <input type="submit" value="Next" />
+      <input type="hidden" name="page" value="${page}" />
     </form>
   </body>
 </html
