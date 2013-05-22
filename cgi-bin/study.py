@@ -16,7 +16,6 @@ from image import Image
 def main():
     ## 
     print "Content-type: text/html\n"
-    userId = 0
     page = 1
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
     cursor = connector.cursor()
@@ -24,6 +23,11 @@ def main():
 
     ## request parameters
     form = cgi.FieldStorage()
+    # userId
+    if form.has_key("userId"):
+        userId = form["userId"].value
+    print userId
+
     # page
     if form.has_key("page"):
         page = int(form["page"].value) + 1
@@ -38,7 +42,7 @@ def main():
             genreId = result5[0][0]
             sql4 = "insert into result_like (image_id, user_id, genre_id) values (" + str(i) + " , " + str(userId) + " , " + str(genreId) + ")"
             print sql4
-#            cursor.execute(sql4)
+            cursor.execute(sql4)
 
 
     ## create data
@@ -64,15 +68,15 @@ def main():
     ## update history to be shown
     for image in list:
         sql3 = "update history set shown_flg = 1 where image_id = " + str(image.id) + " and user_id =  " + str(userId)
-#        cursor.execute(sql3)
-#        connector.commit()
+        cursor.execute(sql3)
+        connector.commit()
 
 
     ## data for view
     t = Template(filename = dirpath + "/templates/study.html")
  
     ip = os.environ["REMOTE_ADDR"]
-    data = {"list": list, "ip": ip, "page": page}
+    data = {"list": list, "ip": ip, "page": page, "userId": userId}
  
     html = t.render(**data)
     print html

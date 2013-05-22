@@ -17,7 +17,6 @@ from image import Image
 def main():
     ## 
     print "Content-type: text/html\n"
-    userId = 0
     page = 1
     trialPageCnt = 10
     dispCntPerPage = 4
@@ -30,6 +29,10 @@ def main():
 
     ## request parameters
     form = cgi.FieldStorage()
+    # userId
+    if form.has_key("userId"):
+        userId = form["userId"].value
+
     # page
     if form.has_key("page"):
         page = int(form["page"].value) + 1
@@ -99,7 +102,7 @@ def main():
     t = Template(filename = dirpath + "/templates/analyze.html")
  
     ip = os.environ["REMOTE_ADDR"]
-    data = {"list": list, "ip": ip, "page": page, "likeCnt": likeCnt, "dispList": dispList}
+    data = {"list": list, "ip": ip, "page": page, "likeCnt": likeCnt, "dispList": dispList, "userId": userId}
  
     html = t.render(**data)
     print html

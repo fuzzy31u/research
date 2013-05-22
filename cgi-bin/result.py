@@ -10,7 +10,6 @@ from mako.lookup import TemplateLookup
 def main():
     ## 
     print "Content-type: text/html\n"
-    userId = 0
     totalShownCnt = 40
     totalLikeCnt = 0
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
@@ -19,6 +18,9 @@ def main():
 
     ## request parameters
     form = cgi.FieldStorage()
+    # userId
+    if form.has_key("userId"):
+        userId = form["userId"].value
     # page
     if form.has_key("likeCnt"):
         totalLikeCnt = form["likeCnt"].value

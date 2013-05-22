@@ -10,10 +10,16 @@ from mako.lookup import TemplateLookup
 def main():
     ## 
     print "Content-type: text/html\n"
-    userId = 0
     page = 1    
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
     cursor = connector.cursor()
+
+
+    ## request parameters
+    # userId
+    if form.has_key("userId"):
+        userId = form["userId"].value
+
 
     ## CALUCULATION 1
     ## calculate hit_ratio
