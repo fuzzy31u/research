@@ -17,7 +17,7 @@ def main():
 
     ## CALUCULATION 1
     ## calculate hit_ratio
-    sql1 = "select count(*) from history where user_id = " + str(userId)
+    sql1 = "select count(*) from history where shown_flg = 1 and user_id = " + str(userId)
     cursor.execute(sql1)
     result1 = cursor.fetchall()
     totalShownCnt = result1[0][0]
@@ -30,6 +30,7 @@ def main():
 
     sql3 = "insert into hit_study_ratio (user_id, like_cnt, ratio) values (" + str(userId) + ", " + str(totalLikeCnt) + ", " + str(ratio) + ")"
 #    cursor.execute(sql3)
+
 
     ## CALUCULATION 2
     ## calculate result_ratio

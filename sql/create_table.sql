@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS genre;
 DROP TABLE IF EXISTS result_like;
 DROP TABLE IF EXISTS result_ratio;
 DROP TABLE IF EXISTS hit_study_ratio;
-DROP TABLE IF EXISTS hit_analized_ratio;
+DROP TABLE IF EXISTS hit_analyzed_ratio;
 
 -- create table
 CREATE TABLE image(
@@ -51,7 +51,7 @@ CREATE TABLE hit_study_ratio(
        ratio FLOAT NOT NULL
 ) CHARSET=utf8;
 
-CREATE TABLE hit_analized_ratio(
+CREATE TABLE hit_analyzed_ratio(
        user_id INT NOT NULL PRIMARY KEY,
        like_cnt INT NOT NULL DEFAULT 0,
        ratio FLOAT NOT NULL

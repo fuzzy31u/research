@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Analyze</title>
+  </head>
+  <body>
+    <h1>Analyze</h1>
+    % if page == 10:
+    <form method="post" action="./result.py">
+    % else:
+    <form method="post" action="./analyze.py">
+    % endif
+      % for d in dispList:
+      <p>
+	<img src="http://${ip}:8000/cgi-bin/images/${d.name}" width="200" height="200"/>
+	<input type="checkbox" name="like" value="${d.id}">Like<3
+      </p>								  
+      % endfor
+      <input type="submit" value="Next" />
+      <input type="hidden" name="page" value="${page}" />
+      <input type="hidden" name="likeCnt" value="${likeCnt}" />
+      <input type="hidden" name="list" value="${list}" />
+    </form>
+  </body>
+</html
