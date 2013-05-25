@@ -10,12 +10,11 @@ def main():
     ## import my modules
     dirpath = os.path.dirname(os.path.abspath(__file__))
 
-
     ## 
     print "Content-type: text/html\n"
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
+    connector.autocommit(True)
     cursor = connector.cursor()
-
 
 
     ## 
@@ -24,12 +23,10 @@ def main():
     result1 = cursor.fetchall()
 
 
-
     ## get files from image directory
     for row in result1:
         list = os.listdir(dirpath + "/cgi-bin/images/" + str(row[0]))
 
-        print list
         for f in list:
             sql2 = "insert into image (genre_id, file_name) values (" + str(row[0]) + ", '" + f + "')"
             print sql2
