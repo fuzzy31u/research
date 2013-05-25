@@ -27,7 +27,6 @@ def main():
     cursor = connector.cursor()
 
 
-
     ## request parameters
     form = cgi.FieldStorage()
     # userId
@@ -65,8 +64,9 @@ def main():
             cnt = totalShownCnt * row[3]
             dict[row[0]] = cnt
             # TODO: adjust so that just 40 OR 90
-            # create ratio image list
 
+
+        # create ratio image list
         print dict
         for k, v in dict.items():
             v = int(v)
@@ -102,7 +102,8 @@ def main():
     ## data for view
     t = Template(filename = dirpath + "/templates/analyze.html")
  
-    ip = os.environ["REMOTE_ADDR"]
+#    ip = os.environ["REMOTE_ADDR"]
+    ip = "localhost"
     data = {"list": list, "ip": ip, "page": page, "likeCnt": likeCnt, "dispList": dispList, "userId": userId}
  
     html = t.render(**data)

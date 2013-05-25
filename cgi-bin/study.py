@@ -27,7 +27,6 @@ def main():
     # userId
     if form.has_key("userId"):
         userId = form["userId"].value
-    print userId
 
     # page
     if form.has_key("page"):
@@ -42,13 +41,12 @@ def main():
             result5 = cursor.fetchall()
             genreId = result5[0][0]
             sql4 = "insert into result_like (image_id, user_id, genre_id) values (" + str(i) + " , " + str(userId) + " , " + str(genreId) + ")"
-            print sql4
             cursor.execute(sql4)
 
 
     ## create data
     list = []
-    for i in range(4):
+    for i in range(6):
         sql1 = "select * from history where genre_id = " + str(i) + " and user_id = " + str(userId) + " and shown_flg = 0 limit 1"
         cursor.execute(sql1)
         result1 = cursor.fetchall()
@@ -76,7 +74,8 @@ def main():
     ## data for view
     t = Template(filename = dirpath + "/templates/study.html")
  
-    ip = os.environ["REMOTE_ADDR"]
+#    ip = os.environ["REMOTE_ADDR"]
+    ip = "localhost"
     data = {"list": list, "ip": ip, "page": page, "userId": userId}
  
     html = t.render(**data)

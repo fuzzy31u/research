@@ -10,7 +10,6 @@ from mako.lookup import TemplateLookup
 def main():
     ## 
     print "Content-type: text/html\n"
-    page = 1    
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
     connector.autocommit(True)
     cursor = connector.cursor()
@@ -36,7 +35,8 @@ def main():
     ratio = float(totalLikeCnt) / float(totalShownCnt)
 
     sql3 = "insert into hit_study_ratio (user_id, like_cnt, ratio) values (" + str(userId) + ", " + str(totalLikeCnt) + ", " + str(ratio) + ")"
-#    cursor.execute(sql3)
+    cursor.execute(sql3)
+    print sql3
 
 
     ## CALUCULATION 2
@@ -44,7 +44,7 @@ def main():
     # get each ratio for calculate result_ratio
     totalGenreRatio = float(0)
     genreRatioDict = {}
-    for i in range(4):
+    for i in range(6):
         sql4 = "select count(*) from result_like where user_id = " + str(userId) + " and genre_id = " + str(i)
         cursor.execute(sql4)
         result4 = cursor.fetchall()
@@ -69,13 +69,15 @@ def main():
         print genreRatio
         normRatio = genreRatio / float(totalGenreRatio)
         sql6 = "insert into result_ratio (genre_id, user_id, ratio, normalisation_ratio) values (" + str(k) + ", " + str(userId) + ", " + str(genreRatio) + ", " + str(normRatio) + ")"
-#        cursor.execute(sql6)
+        cursor.execute(sql6)
+        print sql6
 
 
     ## data for view
     dirpath = os.path.dirname(os.path.abspath(__file__))
     t = Template(filename = dirpath + "/templates/calc.html")
-    ip = os.environ["REMOTE_ADDR"]
+#    ip = os.environ["REMOTE_ADDR"]
+    ip = "localhost"
     data = {"ip": ip, "userId": userId} 
     html = t.render(**data)
     print html
