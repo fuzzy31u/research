@@ -62,7 +62,7 @@ def main():
     
             name = result2[0][0]
             
-            image = Image(imageId, name)
+            image = Image(imageId, name, i)
             list.append(image)
 
 
