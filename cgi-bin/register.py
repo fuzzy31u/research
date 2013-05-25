@@ -11,6 +11,7 @@ def main():
     ## 
     print "Content-type: text/html\n"
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
+    connector.autocommit(True)
     cursor = connector.cursor()
 
 
@@ -25,7 +26,6 @@ def main():
         sql1 = "insert into user (name) values ('" + str(name) + "')"
         print sql1
         cursor.execute(sql1)
-        connector.commit
         id = cursor.lastrowid
         print id
 

@@ -23,6 +23,7 @@ def main():
     likeCnt = 0
     list = []
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
+    connector.autocommit(True)
     cursor = connector.cursor()
 
 

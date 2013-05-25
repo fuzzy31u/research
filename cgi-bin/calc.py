@@ -12,6 +12,7 @@ def main():
     print "Content-type: text/html\n"
     page = 1    
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
+    connector.autocommit(True)
     cursor = connector.cursor()
 
 

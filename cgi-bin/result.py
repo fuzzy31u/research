@@ -13,6 +13,7 @@ def main():
     totalShownCnt = 40
     totalLikeCnt = 0
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
+    connector.autocommit(True)
     cursor = connector.cursor()
 
 
