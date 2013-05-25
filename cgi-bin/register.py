@@ -25,6 +25,7 @@ def main():
         sql1 = "insert into user (name) values ('" + str(name) + "')"
         print sql1
         cursor.execute(sql1)
+        connector.commit
         id = cursor.lastrowid
         print id
 
