@@ -16,9 +16,12 @@ def main():
 
 
     ## request parameters
+    form = cgi.FieldStorage()
     # userId
     if form.has_key("userId"):
         userId = form["userId"].value
+
+    print userId
 
 
     ## CALUCULATION 1
