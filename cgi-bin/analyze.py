@@ -74,12 +74,10 @@ def main():
             # TODO:if data is not enough amount, better to get also from shown_flg = 1?
             cursor.execute(sql3)
             result3 = cursor.fetchall()
- #           print sql3
             for row in result3:
                 imageId = row[0]
 
                 sql4 = "select file_name from image where id = " + str(imageId)
-#                print sql4
                 cursor.execute(sql4)
                 result4 = cursor.fetchall()
     
@@ -89,7 +87,6 @@ def main():
                 list.append(image)
 
         random.shuffle(list)
-    print list
 
 
     ## create display data
@@ -97,7 +94,6 @@ def main():
     for i in range(dispCntPerPage):
         if len(list) > 0:
             dispList.append(list.pop())
-    print dispList
 
 
 
