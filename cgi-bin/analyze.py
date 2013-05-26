@@ -45,10 +45,8 @@ def main():
     # list
     if form.has_key("list"):
         list = form.getlist("list")
-
-    print likeCnt
-
-
+        print "---list---"
+        print list
 
 
     ## create total image data
@@ -103,11 +101,12 @@ def main():
 
     ## data for view
     t = Template(filename = dirpath + "/templates/analyze.html")
+
  
 #    ip = os.environ["REMOTE_ADDR"]
     ip = "localhost"
     data = {"list": list, "ip": ip, "page": page, "likeCnt": likeCnt, "dispList": dispList, "userId": userId}
- 
+
     html = t.render(**data)
     print html
 
