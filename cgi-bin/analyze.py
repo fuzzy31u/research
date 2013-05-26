@@ -19,7 +19,7 @@ def main():
     print "Content-type: text/html\n"
     page = 1
     trialPageCnt = 10
-    dispCntPerPage = 4
+    dispCntPerPage = 6
     likeCnt = 0
     list = []
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
@@ -74,12 +74,12 @@ def main():
             # TODO:if data is not enough amount, better to get also from shown_flg = 1?
             cursor.execute(sql3)
             result3 = cursor.fetchall()
-            print sql3
+ #           print sql3
             for row in result3:
                 imageId = row[0]
 
                 sql4 = "select file_name from image where id = " + str(imageId)
-                print sql4
+#                print sql4
                 cursor.execute(sql4)
                 result4 = cursor.fetchall()
     
@@ -97,7 +97,7 @@ def main():
     for i in range(dispCntPerPage):
         if len(list) > 0:
             dispList.append(list.pop())
-
+    print dispList
 
 
 
