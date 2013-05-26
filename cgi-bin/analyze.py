@@ -70,14 +70,16 @@ def main():
         print dict
         for k, v in dict.items():
             v = int(v)
-            sql3 = "select * from history where shown_flg = 1 and user_id = " + str(userId) + " and genre_id = " + str(k) + " limit " + str(v)
+            sql3 = "select * from history where shown_flg = 0 and user_id = " + str(userId) + " and genre_id = " + str(k) + " limit " + str(v)
             # TODO:if data is not enough amount, better to get also from shown_flg = 1?
             cursor.execute(sql3)
             result3 = cursor.fetchall()
+            print sql3
             for row in result3:
                 imageId = row[0]
 
                 sql4 = "select file_name from image where id = " + str(imageId)
+                print sql4
                 cursor.execute(sql4)
                 result4 = cursor.fetchall()
     
