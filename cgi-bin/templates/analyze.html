@@ -12,7 +12,7 @@
     % endif
       % for d in dispList:
       <p>
-	<img src="http://${ip}:8000/cgi-bin/images/${d.name}" width="200" height="200"/>
+	<img src="http://${ip}:8000/cgi-bin/images/${d.genre_id}/${d.name}" width="200" height="200"/>
 	<input type="checkbox" name="like" value="${d.id}">Like<3
       </p>								  
       % endfor

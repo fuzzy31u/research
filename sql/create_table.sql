@@ -33,13 +33,13 @@ CREATE TABLE genre(
 ) CHARSET=utf8;
 
 CREATE TABLE result_like(
-       image_id INT NOT NULL PRIMARY KEY,
+       image_id INT NOT NULL,
        user_id INT NOT NULL,
        genre_id INT NOT NULL
 ) CHARSET=utf8;
 
 CREATE TABLE result_ratio(
-       genre_id INT NOT NULL PRIMARY KEY,
+       genre_id INT NOT NULL,
        user_id INT NOT NULL,
        ratio FLOAT NOT NULL,
        normalisation_ratio FLOAT NOT NULL

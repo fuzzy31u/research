@@ -70,7 +70,7 @@ def main():
         print dict
         for k, v in dict.items():
             v = int(v)
-            sql3 = "select * from history where shown_flg = 0 and user_id = " + str(userId) + " and genre_id = " + str(k) + " limit " + str(v)
+            sql3 = "select * from history where shown_flg = 1 and user_id = " + str(userId) + " and genre_id = " + str(k) + " limit " + str(v)
             # TODO:if data is not enough amount, better to get also from shown_flg = 1?
             cursor.execute(sql3)
             result3 = cursor.fetchall()
@@ -83,7 +83,7 @@ def main():
     
                 name = result4[0][0]
            
-                image = Image(imageId, name)
+                image = Image(imageId, name, k)
                 list.append(image)
 
         random.shuffle(list)
