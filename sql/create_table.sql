@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS result_like;
 DROP TABLE IF EXISTS result_ratio;
 DROP TABLE IF EXISTS hit_study_ratio;
 DROP TABLE IF EXISTS hit_analyzed_ratio;
+DROP TABLE IF EXISTS temp_analyzed_image;
 
 -- create table
 CREATE TABLE image(
@@ -56,3 +57,20 @@ CREATE TABLE hit_analyzed_ratio(
        like_cnt INT NOT NULL DEFAULT 0,
        ratio FLOAT NOT NULL
 ) CHARSET=utf8;
+
+CREATE TABLE temp_analyzed_image(
+       id INT NOT NULL,
+       user_id INT NOT NULL,
+       genre_id INT NOT NULL,
+       file_name VARCHAR(64) NOT NULL
+) CHARSET=utf8;
+
+
+-- category
+INSERT INTO genre (id, name) values (0, "Nail");
+INSERT INTO genre (id, name) values (1, "Fashion");
+INSERT INTO genre (id, name) values (2, "Sweets");
+INSERT INTO genre (id, name) values (3, "Scene");
+INSERT INTO genre (id, name) values (4, "Interior");
+INSERT INTO genre (id, name) values (5, "Pet");
+

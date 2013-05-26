@@ -21,7 +21,6 @@ def main():
     trialPageCnt = 10
     dispCntPerPage = 6
     likeCnt = 0
-    list = []
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
     connector.autocommit(True)
     cursor = connector.cursor()
@@ -43,14 +42,12 @@ def main():
             likeCnt += 1
 
     # list
-    if form.has_key("list"):
-        list = form.getlist("list")
-        print "---list---"
-        print list
-
+#    if form.has_key("list"):
+#        list = form.getlist("list")
 
     ## create total image data
     if page == 1:
+        list = []
         sql1 = "select count(*) from genre"
         cursor.execute(sql1)
         result1 = cursor.fetchall()
@@ -69,7 +66,6 @@ def main():
 
 
         # create ratio image list
-        print dict
         for k, v in dict.items():
             v = int(v)
             sql3 = "select * from history where shown_flg = 0 and user_id = " + str(userId) + " and genre_id = " + str(k) + " limit " + str(v)
@@ -89,13 +85,32 @@ def main():
                 list.append(image)
 
         random.shuffle(list)
+        print list
+
+        ## save list data temporary
+        for l in list:
+            sql5 = "insert into temp_analyzed_image values (" + str(l.id) + ", " + str(userId) + ", " + str(l.genreId) + ", '" + l.name + "')"
+            print sql5
+            cursor.execute(sql5)
+
 
 
     ## create display data
     dispList = []    
-    for i in range(dispCntPerPage):
-        if len(list) > 0:
-            dispList.append(list.pop())
+#    for i in range(dispCntPerPage):
+#        print len(list)
+#        if len(list) > 0:
+#            dispList.append(list.pop())
+    offset = dispCntPerPage * (page - 1)
+    sql6 = "select * from temp_analyzed_image where user_id = " + str(userId) + " limit " + str(dispCntPerPage) + " offset " + str(offset)
+    cursor.execute(sql6)
+    result6 = cursor.fetchall()
+    for row in result6:
+        image = Image(row[0], row[3], row[2])
+        dispList.append(image)
+
+    print dispList
+
 
 
 
@@ -105,7 +120,8 @@ def main():
  
 #    ip = os.environ["REMOTE_ADDR"]
     ip = "localhost"
-    data = {"list": list, "ip": ip, "page": page, "likeCnt": likeCnt, "dispList": dispList, "userId": userId}
+#    data = {"list": list, "ip": ip, "page": page, "likeCnt": likeCnt, "dispList": dispList, "userId": userId}
+    data = {"ip": ip, "page": page, "likeCnt": likeCnt, "dispList": dispList, "userId": userId}
 
     html = t.render(**data)
     print html
