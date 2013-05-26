@@ -42,6 +42,10 @@ def main():
         for i in form.getlist("like"):
             likeCnt += 1
 
+    # list
+    if form.has_key("list"):
+        list = form.getlist("list")
+
     print likeCnt
 
 
