@@ -5,3 +5,4 @@ class Image:
         self.id = id
         self.name = name
         self.genreId = genreId
+        print "new image is created:" + str(id) + name + str(genreId)
