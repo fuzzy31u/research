@@ -10,7 +10,7 @@ from mako.lookup import TemplateLookup
 def main():
     ## 
     print "Content-type: text/html\n"
-    totalShownCnt = 40
+    totalShownCnt = 60
     totalLikeCnt = 0
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
     connector.autocommit(True)

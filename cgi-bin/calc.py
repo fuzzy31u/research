@@ -21,8 +21,6 @@ def main():
     if form.has_key("userId"):
         userId = form["userId"].value
 
-    print userId
-
 
     ## CALUCULATION 1
     ## calculate hit_ratio
@@ -39,7 +37,6 @@ def main():
 
     sql3 = "insert into hit_study_ratio (user_id, like_cnt, ratio) values (" + str(userId) + ", " + str(totalLikeCnt) + ", " + str(ratio) + ")"
     cursor.execute(sql3)
-    print sql3
 
 
     ## CALUCULATION 2
@@ -63,7 +60,6 @@ def main():
             totalGenreRatio += genreRatio
             genreRatioDict[i] = genreRatio
 
-    print totalGenreRatio
 
     # calculate normalisation ratio
     for k, v in genreRatioDict.items():
@@ -73,7 +69,6 @@ def main():
         normRatio = genreRatio / float(totalGenreRatio)
         sql6 = "insert into result_ratio (genre_id, user_id, ratio, normalisation_ratio) values (" + str(k) + ", " + str(userId) + ", " + str(genreRatio) + ", " + str(normRatio) + ")"
         cursor.execute(sql6)
-        print sql6
 
 
     ## data for view

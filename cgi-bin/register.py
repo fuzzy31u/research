@@ -24,7 +24,6 @@ def main():
     
         ## register user
         sql1 = "insert into user (name) values ('" + str(name) + "')"
-        print sql1
         cursor.execute(sql1)
         id = cursor.lastrowid
         print id
@@ -35,7 +34,6 @@ def main():
         result2 = cursor.fetchall()
         for row in result2:
             sql3 = "insert into history values (" + str(row[0]) + ", " + str(id) + ", " + str(row[1]) + ", 0)";
-            print sql3
             cursor.execute(sql3)
 
 

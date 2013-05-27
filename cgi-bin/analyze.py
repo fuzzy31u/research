@@ -20,7 +20,7 @@ def main():
     page = 1
     trialPageCnt = 10
     dispCntPerPage = 6
-    likeCnt = 0
+#    likeCnt = 0
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
     connector.autocommit(True)
     cursor = connector.cursor()
@@ -40,6 +40,9 @@ def main():
     if form.has_key("like"):
         for i in form.getlist("like"):
             likeCnt += 1
+            print likeCnt
+    else:
+        likeCnt = 0
 
     # list
 #    if form.has_key("list"):
@@ -90,7 +93,6 @@ def main():
         ## save list data temporary
         for l in list:
             sql5 = "insert into temp_analyzed_image values (" + str(l.id) + ", " + str(userId) + ", " + str(l.genreId) + ", '" + l.name + "')"
-            print sql5
             cursor.execute(sql5)
 
 
@@ -103,6 +105,7 @@ def main():
 #            dispList.append(list.pop())
     offset = dispCntPerPage * (page - 1)
     sql6 = "select * from temp_analyzed_image where user_id = " + str(userId) + " limit " + str(dispCntPerPage) + " offset " + str(offset)
+    print sql6
     cursor.execute(sql6)
     result6 = cursor.fetchall()
     for row in result6:
