@@ -38,8 +38,9 @@ def main():
     
     # like    
     if form.has_key("like"):
+        likeCnt = form.getlist("like")
         for i in form.getlist("like"):
-            likeCnt += 1
+            likeCnt = int(likeCnt) + 1
             print likeCnt
     else:
         likeCnt = 0
@@ -88,7 +89,7 @@ def main():
                 list.append(image)
 
         random.shuffle(list)
-        print list
+
 
         ## save list data temporary
         for l in list:
@@ -111,10 +112,6 @@ def main():
     for row in result6:
         image = Image(row[0], row[3], row[2])
         dispList.append(image)
-
-    print dispList
-
-
 
 
     ## data for view
