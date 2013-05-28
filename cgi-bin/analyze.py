@@ -38,22 +38,14 @@ def main():
     
     # like    
     if form.has_key("totalLikeCnt"):
-        totalLikeCnt = form.getlist("totalLikeCnt")
-
+        totalLikeCnt = form["totalLikeCnt"].value
         if form.has_key("like"):
             likeCnt = form.getlist("like")
             if len(likeCnt) > 0:
-                print len(likeCnt)
-                totalLikeCnt = int(totalLikeCnt) + len(likeCnt)
+                lc = len(likeCnt)
+                totalLikeCnt = lc + int(totalLikeCnt)
     else:
         totalLikeCnt = 0
-    print totalLikeCnt
-
-#            for i in form.getlist("like"):
-#                likeCnt = int(likeCnt) + 1
-#                print likeCnt
-#            else:
-#                likeCnt = 0
 
 
 
@@ -125,11 +117,9 @@ def main():
     ## data for view
     t = Template(filename = dirpath + "/templates/analyze.html")
 
- 
 #    ip = os.environ["REMOTE_ADDR"]
     ip = "localhost"
-#    data = {"list": list, "ip": ip, "page": page, "likeCnt": likeCnt, "dispList": dispList, "userId": userId}
-    data = {"ip": ip, "page": page, "likeCnt": likeCnt, "dispList": dispList, "userId": userId}
+    data = {"ip": ip, "page": page, "totalLikeCnt": totalLikeCnt, "dispList": dispList, "userId": userId}
 
     html = t.render(**data)
     print html

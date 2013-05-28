@@ -23,8 +23,8 @@ def main():
     if form.has_key("userId"):
         userId = form["userId"].value
     # page
-    if form.has_key("likeCnt"):
-        totalLikeCnt = form["likeCnt"].value
+    if form.has_key("totalLikeCnt"):
+        totalLikeCnt = form["totalLikeCnt"].value
 
 
     ## calculate hit_ratio
