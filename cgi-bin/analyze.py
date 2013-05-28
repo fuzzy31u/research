@@ -20,7 +20,6 @@ def main():
     page = 1
     trialPageCnt = 10
     dispCntPerPage = 6
-#    likeCnt = 0
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
     connector.autocommit(True)
     cursor = connector.cursor()
@@ -66,7 +65,6 @@ def main():
         for row in result2:
             cnt = totalShownCnt * row[3]
             dict[row[0]] = cnt
-            # TODO: adjust so that just 40 OR 90
 
 
         # create ratio image list
@@ -88,6 +86,35 @@ def main():
                 image = Image(imageId, name, k)
                 list.append(image)
 
+        # adjust so that just 60
+        totalDispCnt = dispCntPerPage * trialPageCnt
+        if len(list) < totalDispCnt:
+            print "short!"
+            shortage = totalDispCnt - len(list)
+            print shortage
+            shortagePerGenre = shortage / dispCntPerPage
+            print shortagePerGenre
+            for i in range(dispCntPerPage):
+                sql7 = "select * from history where shown_flg = 0 and user_id = " + str(userId) + " and genre_id = " + str(i) + " limit " + str(shortagePerGenre)
+                print sql7
+                cursor.execute(sql7)
+                result7 = cursor.fetchall()
+                for i in range(shortagePerGenre):
+                    imageId = result7[i][0]
+                    genreId = result7[i][2]
+                    sql8 = "select file_name from image where id = " + str(imageId)
+                    print sql8
+                    cursor.execute(sql8)
+                    result8 = cursor.fetchall()
+    
+                    name = result8[0][0]
+           
+                    image = Image(imageId, name, genreId)
+                    print imageId
+                    print name
+                    print genreId
+                    list.append(image)
+
         random.shuffle(list)
 
 
@@ -100,10 +127,6 @@ def main():
 
     ## create display data
     dispList = []    
-#    for i in range(dispCntPerPage):
-#        print len(list)
-#        if len(list) > 0:
-#            dispList.append(list.pop())
     offset = dispCntPerPage * (page - 1)
     sql6 = "select * from temp_analyzed_image where user_id = " + str(userId) + " limit " + str(dispCntPerPage) + " offset " + str(offset)
     print sql6
