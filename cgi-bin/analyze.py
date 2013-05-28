@@ -37,17 +37,25 @@ def main():
         page = int(form["page"].value) + 1
     
     # like    
-    if form.has_key("like"):
-        likeCnt = form.getlist("like")
-        for i in form.getlist("like"):
-            likeCnt = int(likeCnt) + 1
-            print likeCnt
-    else:
-        likeCnt = 0
+    if form.has_key("totalLikeCnt"):
+        totalLikeCnt = form.getlist("totalLikeCnt")
 
-    # list
-#    if form.has_key("list"):
-#        list = form.getlist("list")
+        if form.has_key("like"):
+            likeCnt = form.getlist("like")
+            if len(likeCnt) > 0:
+                print len(likeCnt)
+                totalLikeCnt = int(totalLikeCnt) + len(likeCnt)
+    else:
+        totalLikeCnt = 0
+    print totalLikeCnt
+
+#            for i in form.getlist("like"):
+#                likeCnt = int(likeCnt) + 1
+#                print likeCnt
+#            else:
+#                likeCnt = 0
+
+
 
     ## create total image data
     if page == 1:
