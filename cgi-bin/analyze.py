@@ -20,7 +20,6 @@ def main():
     page = 1
     trialPageCnt = 10
     dispCntPerPage = 6
-#    likeCnt = 0
     connector = MySQLdb.connect(host="localhost",db="research",user="root",passwd="")
     connector.autocommit(True)
     cursor = connector.cursor()
@@ -37,13 +36,16 @@ def main():
         page = int(form["page"].value) + 1
     
     # like    
+    if form.has_key("totalLikeCnt"):
+        totalLikeCnt = form.getlist("totalLikeCnt")
+    else:
+        totalLikeCnt = 0
+        
     if form.has_key("like"):
         likeCnt = form.getlist("like")
         for i in form.getlist("like"):
-            likeCnt = int(likeCnt) + 1
-            print likeCnt
-    else:
-        likeCnt = 0
+            totalLikeCnt += 1
+            print totalLikeCnt
 
     # list
 #    if form.has_key("list"):
@@ -121,7 +123,7 @@ def main():
 #    ip = os.environ["REMOTE_ADDR"]
     ip = "localhost"
 #    data = {"list": list, "ip": ip, "page": page, "likeCnt": likeCnt, "dispList": dispList, "userId": userId}
-    data = {"ip": ip, "page": page, "likeCnt": likeCnt, "dispList": dispList, "userId": userId}
+    data = {"ip": ip, "page": page, "totalLikeCnt": totalLikeCnt, "dispList": dispList, "userId": userId}
 
     html = t.render(**data)
     print html
