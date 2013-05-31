@@ -72,9 +72,7 @@ def main():
     ## data for view
     dirpath = os.path.dirname(os.path.abspath(__file__))
     t = Template(filename = dirpath + "/templates/calc.html")
-#    ip = os.environ["REMOTE_ADDR"]
-    ip = "localhost"
-    data = {"ip": ip, "userId": userId} 
+    data = {"userId": userId} 
     html = t.render(**data)
     print html
 
