@@ -63,9 +63,7 @@ def main():
 
     # calculate normalisation ratio
     for k, v in genreRatioDict.items():
-        print k, v
         genreRatio = float(v)
-        print genreRatio
         normRatio = genreRatio / float(totalGenreRatio)
         sql6 = "insert into result_ratio (genre_id, user_id, ratio, normalisation_ratio) values (" + str(k) + ", " + str(userId) + ", " + str(genreRatio) + ", " + str(normRatio) + ")"
         cursor.execute(sql6)

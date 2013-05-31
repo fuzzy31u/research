@@ -2,6 +2,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Analyze</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
   </head>
   <body>
     <h1>Analyze</h1>
@@ -11,15 +12,17 @@
     <form method="post" action="./analyze.py">
     % endif
       % for d in dispList:
-      <p>
-	<img src="http://${ip}:8000/cgi-bin/images/${d.genreId}/${d.name}" width="200" height="200"/>
-	<input type="checkbox" name="like" value="${d.id}">Like<3
+      <p id="image">
+	<img src="http://${ip}:8000/cgi-bin/images/${d.genreId}/${d.name}" width="200" height="200"/><br />
+	<input type="checkbox" name="like" value="${d.id}">Like!
       </p>								  
       % endfor
-      <input type="submit" value="Next" />
-      <input type="hidden" name="userId" value="${userId}" />
-      <input type="hidden" name="page" value="${page}" />
-      <input type="hidden" name="totalLikeCnt" value="${totalLikeCnt}" />
+      <div id="submit">
+	<input type="submit" value="Next" id="submit"/>
+	<input type="hidden" name="userId" value="${userId}" />
+	<input type="hidden" name="page" value="${page}" />
+	<input type="hidden" name="totalLikeCnt" value="${totalLikeCnt}" />
+      </div>
     </form>
   </body>
 </html

@@ -31,7 +31,6 @@ def main():
     ratio = float(totalLikeCnt) / float(totalShownCnt)
 
     sql3 = "insert into hit_analyzed_ratio (user_id, like_cnt, ratio) values (" + str(userId) + ", " + str(totalLikeCnt) + ", " + str(ratio) + ")"
-    print sql3
     cursor.execute(sql3)
 
 

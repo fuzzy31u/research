@@ -26,7 +26,6 @@ def main():
         sql1 = "insert into user (name) values ('" + str(name) + "')"
         cursor.execute(sql1)
         id = cursor.lastrowid
-        print id
 
         ## register history data        
         sql2 = "select * from image"
