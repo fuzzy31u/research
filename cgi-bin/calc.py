@@ -63,9 +63,7 @@ def main():
 
     # calculate normalisation ratio
     for k, v in genreRatioDict.items():
-        print k, v
         genreRatio = float(v)
-        print genreRatio
         normRatio = genreRatio / float(totalGenreRatio)
         sql6 = "insert into result_ratio (genre_id, user_id, ratio, normalisation_ratio) values (" + str(k) + ", " + str(userId) + ", " + str(genreRatio) + ", " + str(normRatio) + ")"
         cursor.execute(sql6)
@@ -74,9 +72,7 @@ def main():
     ## data for view
     dirpath = os.path.dirname(os.path.abspath(__file__))
     t = Template(filename = dirpath + "/templates/calc.html")
-#    ip = os.environ["REMOTE_ADDR"]
-    ip = "localhost"
-    data = {"ip": ip, "userId": userId} 
+    data = {"userId": userId} 
     html = t.render(**data)
     print html
 

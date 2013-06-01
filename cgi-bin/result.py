@@ -23,15 +23,14 @@ def main():
     if form.has_key("userId"):
         userId = form["userId"].value
     # page
-    if form.has_key("likeCnt"):
-        totalLikeCnt = form["likeCnt"].value
+    if form.has_key("totalLikeCnt"):
+        totalLikeCnt = form["totalLikeCnt"].value
 
 
     ## calculate hit_ratio
     ratio = float(totalLikeCnt) / float(totalShownCnt)
 
     sql3 = "insert into hit_analyzed_ratio (user_id, like_cnt, ratio) values (" + str(userId) + ", " + str(totalLikeCnt) + ", " + str(ratio) + ")"
-    print sql3
     cursor.execute(sql3)
 
 

@@ -37,19 +37,14 @@ def main():
     
     # like    
     if form.has_key("totalLikeCnt"):
-        totalLikeCnt = form.getlist("totalLikeCnt")
+        totalLikeCnt = form["totalLikeCnt"].value
+        if form.has_key("like"):
+            likeCnt = form.getlist("like")
+            if len(likeCnt) > 0:
+                lc = len(likeCnt)
+                totalLikeCnt = lc + int(totalLikeCnt)
     else:
         totalLikeCnt = 0
-        
-    if form.has_key("like"):
-        likeCnt = form.getlist("like")
-        for i in form.getlist("like"):
-            totalLikeCnt += 1
-            print totalLikeCnt
-
-    # list
-#    if form.has_key("list"):
-#        list = form.getlist("list")
 
     ## create total image data
     if page == 1:
@@ -68,7 +63,6 @@ def main():
         for row in result2:
             cnt = totalShownCnt * row[3]
             dict[row[0]] = cnt
-            # TODO: adjust so that just 40 OR 90
 
 
         # create ratio image list
@@ -76,6 +70,7 @@ def main():
             v = int(v)
             sql3 = "select * from history where shown_flg = 0 and user_id = " + str(userId) + " and genre_id = " + str(k) + " limit " + str(v)
             # TODO:if data is not enough amount, better to get also from shown_flg = 1?
+#            print sql3
             cursor.execute(sql3)
             result3 = cursor.fetchall()
             for row in result3:
@@ -90,6 +85,28 @@ def main():
                 image = Image(imageId, name, k)
                 list.append(image)
 
+        # adjust so that just 60
+        totalDispCnt = dispCntPerPage * trialPageCnt
+        if len(list) < totalDispCnt:
+            shortage = totalDispCnt - len(list)
+            shortagePerGenre = shortage / dispCntPerPage
+            for i in range(dispCntPerPage):
+                sql7 = "select * from history where shown_flg = 0 and user_id = " + str(userId) + " and genre_id = " + str(i) + " order by image_id desc" + " limit " + str(shortagePerGenre)
+#                print sql7
+                cursor.execute(sql7)
+                result7 = cursor.fetchall()
+                for i in range(shortagePerGenre):
+                    imageId = result7[i][0]
+                    genreId = result7[i][2]
+                    sql8 = "select file_name from image where id = " + str(imageId)
+                    cursor.execute(sql8)
+                    result8 = cursor.fetchall()
+    
+                    name = result8[0][0]
+           
+                    image = Image(imageId, name, genreId)
+                    list.append(image)
+
         random.shuffle(list)
 
 
@@ -102,13 +119,8 @@ def main():
 
     ## create display data
     dispList = []    
-#    for i in range(dispCntPerPage):
-#        print len(list)
-#        if len(list) > 0:
-#            dispList.append(list.pop())
     offset = dispCntPerPage * (page - 1)
     sql6 = "select * from temp_analyzed_image where user_id = " + str(userId) + " limit " + str(dispCntPerPage) + " offset " + str(offset)
-    print sql6
     cursor.execute(sql6)
     result6 = cursor.fetchall()
     for row in result6:
@@ -119,10 +131,8 @@ def main():
     ## data for view
     t = Template(filename = dirpath + "/templates/analyze.html")
 
- 
 #    ip = os.environ["REMOTE_ADDR"]
     ip = "localhost"
-#    data = {"list": list, "ip": ip, "page": page, "likeCnt": likeCnt, "dispList": dispList, "userId": userId}
     data = {"ip": ip, "page": page, "totalLikeCnt": totalLikeCnt, "dispList": dispList, "userId": userId}
 
     html = t.render(**data)
